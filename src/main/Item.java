@@ -1,0 +1,19 @@
+package src.main;
+public class Item {
+    private String itemID;
+    private int itemPrice;
+
+    public Item(String id, int price) {
+        itemID = id;
+        itemPrice = price; 
+    }
+
+    public String getID() {
+        return itemID;
+    }
+
+    public int getPrice() {
+        return itemPrice;
+    }
+
+}
