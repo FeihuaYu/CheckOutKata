@@ -5,6 +5,8 @@ import org.junit.Test;
 import src.main.CheckOut;
 import src.main.Item;
 import src.main.ItemsList;
+import src.main.PromotionItems;
+import src.main.PromotionMultiPrice;
 import src.main.TotalPrice;
 
 import static org.junit.Assert.*;
@@ -17,14 +19,19 @@ public class CheckOutTest{
     static Item itemC;
     static Item itemD;
     static Item itemE;
+    static PromotionMultiPrice promotionMultiPrice;
+    static PromotionItems promotionItems;
 
     
     public static void init(){
-        itemA = new Item("A", 50);
-        itemB = new Item("B", 75);
-        itemC = new Item("C", 25);
-        itemD = new Item("D", 150);
-        itemE = new Item("E", 200);
+        itemA = new Item("A", 50, 1);
+        itemB = new Item("B", 75, 1);
+        itemC = new Item("C", 25, 1);
+        itemD = new Item("D", 150, 1);
+        itemE = new Item("E", 200, 1);
+
+        promotionMultiPrice = new PromotionMultiPrice();
+        promotionItems = new PromotionItems(itemB, promotionMultiPrice);
     }
 
     public static Integer scan(String items){
@@ -54,7 +61,7 @@ public class CheckOutTest{
 
     public static Integer price(CheckOut checkOut){
         ItemsList itemsList = checkOut.getItemsList();
-        TotalPrice totalPrice = new TotalPrice(itemsList);
+        TotalPrice totalPrice = new TotalPrice(itemsList, promotionItems);
         int result = totalPrice.calculatePrice();
         System.out.println(result);
         return result;
@@ -68,13 +75,13 @@ public class CheckOutTest{
         assertEquals(Integer.valueOf(150), scan("AAA"));
         assertEquals(Integer.valueOf(150), scan("ABC"));
         assertEquals(Integer.valueOf(225), scan("BD"));
-        // assertEquals(Integer.valueOf(75), scan("B"));
-        // assertEquals(Integer.valueOf(125), scan("BB"));
-        // assertEquals(Integer.valueOf(200), scan("BBB"));
-        // assertEquals(Integer.valueOf(250), scan("BBBB"));
-        // assertEquals(Integer.valueOf(175), price("BAB"));
-        // assertEquals(Integer.valueOf(25), price("C"));
-        // assertEquals(Integer.valueOf(50), price("CC"));
+        assertEquals(Integer.valueOf(75), scan("B"));
+        assertEquals(Integer.valueOf(125), scan("BB"));
+        assertEquals(Integer.valueOf(200), scan("BBB"));
+        assertEquals(Integer.valueOf(250), scan("BBBB"));
+        assertEquals(Integer.valueOf(175), scan("BAB"));
+        assertEquals(Integer.valueOf(25), scan("C"));
+        assertEquals(Integer.valueOf(50), scan("CC"));
         // assertEquals(Integer.valueOf(50), price("CCC"));
         // assertEquals(Integer.valueOf(75), price("CCCC"));
         // assertEquals(Integer.valueOf(100), price("CCCCC"));
