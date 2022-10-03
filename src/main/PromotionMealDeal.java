@@ -2,16 +2,16 @@ package src.main;
 
 import java.util.List;
 
-public class PromotionMealDeal implements PromotionRules{
+public class PromotionMealDeal extends PromotionRules{
     private final int mealDealPrice = 300;
     private List<Item> mealDealList; 
 
-    
-    public PromotionMealDeal(List<Item> mealDealList) {
-        this.mealDealList = mealDealList;
+    public PromotionMealDeal(List<Item> promotionItemList) {
+        super(promotionItemList);
+        mealDealList = promotionItemList;
     }
+    
 
-    @Override
     // Buy D and E for £3
     public int calculatePromotion(List<Integer> itemQuantityList) {
         int promotionValue = 0;
@@ -44,7 +44,7 @@ public class PromotionMealDeal implements PromotionRules{
         return mealDealList;
     }
 
-    @Override
+    // @Override
     public int calculatePromotion(int itemQuantity) {
         // TODO Auto-generated method stub
         return 0;

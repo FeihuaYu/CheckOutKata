@@ -30,32 +30,25 @@ public class TotalPrice {
             totalPrices += itemQuantity * itemPrice;
         }
 
-        totalPromotionValue = calculatePromotionMultiPrice() + calculatePromotionOneFree() + calculatePromotionMealDeal();
-
+        totalPromotionValue = calculatePromotionValue(promotionItems.getPromotionOneFree()) + calculatePromotionValue(promotionItems.getPromotionMultiPrice())
+                            + calculatePromotionMealDeal(promotionItems.getPromotionMealDeal());
         return totalPrices - totalPromotionValue;
     }
 
-    public int calculatePromotionMultiPrice(){
-        int promotionValue = 0;
-        Item targetMultiPriceItem = promotionItems.getPromotionMultiPrice().getMultiPriceItem();
-        if(itemsMap.containsKey(targetMultiPriceItem)){
-            promotionValue = promotionItems.getPromotionMultiPrice().calculatePromotion(itemsMap.get(targetMultiPriceItem));
-        }
-        return promotionValue;
-    }
 
-    public int calculatePromotionOneFree(){
+    public int calculatePromotionValue(PromotionRules promotionRules){
         int promotionValue = 0;
-        Item targetOneFreeItem = promotionItems.getPromotionOneFree().getOneFreeItem();
+        Item targetOneFreeItem = promotionRules.getPromotionItem();
         if(itemsMap.containsKey(targetOneFreeItem)){
-            promotionValue = promotionItems.getPromotionOneFree().calculatePromotion(itemsMap.get(targetOneFreeItem));
+            promotionValue = promotionRules.calculatePromotion(itemsMap.get(targetOneFreeItem));
         }
         return promotionValue;
     }
 
-    public int calculatePromotionMealDeal(){
+
+    public int calculatePromotionMealDeal(PromotionRules promotionRules){
         int promotionValue = 0;
-        List<Item> targetMealDealItem = promotionItems.getPromotionMealDeal().getMealDealList();
+        List<Item> targetMealDealItem = promotionRules.getPromotionItemList();
         List<Integer> quantityList = new LinkedList<>();
         for(Item item : targetMealDealItem){
             if(itemsMap.containsKey(item)){
