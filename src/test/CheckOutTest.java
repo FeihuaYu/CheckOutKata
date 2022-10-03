@@ -7,6 +7,7 @@ import src.main.Item;
 import src.main.ItemsList;
 import src.main.PromotionItems;
 import src.main.PromotionMultiPrice;
+import src.main.PromotionOneFree;
 import src.main.TotalPrice;
 
 import static org.junit.Assert.*;
@@ -20,6 +21,7 @@ public class CheckOutTest{
     static Item itemD;
     static Item itemE;
     static PromotionMultiPrice promotionMultiPrice;
+    static PromotionOneFree promotionOneFree;
     static PromotionItems promotionItems;
 
     
@@ -31,7 +33,9 @@ public class CheckOutTest{
         itemE = new Item("E", 200, 1);
 
         promotionMultiPrice = new PromotionMultiPrice();
-        promotionItems = new PromotionItems(itemB, promotionMultiPrice);
+        promotionOneFree = new PromotionOneFree();
+        promotionItems = new PromotionItems(promotionMultiPrice, promotionOneFree);
+
     }
 
     public static Integer scan(String items){
@@ -82,20 +86,20 @@ public class CheckOutTest{
         assertEquals(Integer.valueOf(175), scan("BAB"));
         assertEquals(Integer.valueOf(25), scan("C"));
         assertEquals(Integer.valueOf(50), scan("CC"));
-        // assertEquals(Integer.valueOf(50), price("CCC"));
-        // assertEquals(Integer.valueOf(75), price("CCCC"));
-        // assertEquals(Integer.valueOf(100), price("CCCCC"));
-        // assertEquals(Integer.valueOf(100), price("CCCCCC"));
-        // assertEquals(Integer.valueOf(150), price("D"));
-        // assertEquals(Integer.valueOf(300), price("DD"));
-        // assertEquals(Integer.valueOf(300), price("DE"));
-        // assertEquals(Integer.valueOf(450), price("DDE"));
-        // assertEquals(Integer.valueOf(200), price("E"));
-        // assertEquals(Integer.valueOf(400), price("EE"));
-        // assertEquals(Integer.valueOf(300), price("ED"));
-        // assertEquals(Integer.valueOf(500), price("EDE"));
-        // assertEquals(Integer.valueOf(600), price("EDDE"));
-        // assertEquals(Integer.valueOf(750), price("EEDDD"));
+        assertEquals(Integer.valueOf(50), scan("CCC"));
+        assertEquals(Integer.valueOf(75), scan("CCCC"));
+        assertEquals(Integer.valueOf(100), scan("CCCCC"));
+        assertEquals(Integer.valueOf(100), scan("CCCCCC"));
+        assertEquals(Integer.valueOf(150), scan("D"));
+        assertEquals(Integer.valueOf(300), scan("DD"));
+        // assertEquals(Integer.valueOf(300), scan("DE"));
+        // assertEquals(Integer.valueOf(450), scan("DDE"));
+        // assertEquals(Integer.valueOf(200), scan("E"));
+        // assertEquals(Integer.valueOf(400), scan("EE"));
+        // assertEquals(Integer.valueOf(300), scan("ED"));
+        // assertEquals(Integer.valueOf(500), scan("EDE"));
+        // assertEquals(Integer.valueOf(600), scan("EDDE"));
+        // assertEquals(Integer.valueOf(750), scan("EEDDD"));
     }
 
     public static void main(String[] args) throws Exception{

@@ -1,11 +1,6 @@
 package src.main;
 
 public class PromotionMultiPrice implements PromotionRules{
-    Item item;
-
-    // public PromotionMultiPrice(Item item) {
-    //     this.item = item;
-    // }
 
     @Override
     // 2 for 125, 75 ,125+75=200, 3*75=225 3/2=1 1*125

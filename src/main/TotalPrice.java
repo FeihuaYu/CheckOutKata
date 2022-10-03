@@ -21,6 +21,7 @@ public class TotalPrice {
             totalPrices += item.getPrice() * item.getQuantity();
             System.out.println("getQuantity is " + item.getQuantity());
             promotionValue = promotionItems.getPromotionMultiPrice().calculatePromotion(item);
+            promotionValue += promotionItems.getPromotionOneFree().calculatePromotion(item);
         }
 
         // promotionValue = promotionItems.getPromotionMultiPrice().calculatePromotion();
