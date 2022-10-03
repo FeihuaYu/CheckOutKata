@@ -6,11 +6,15 @@ import src.main.CheckOut;
 import src.main.Item;
 import src.main.ItemsList;
 import src.main.PromotionItems;
+import src.main.PromotionMealDeal;
 import src.main.PromotionMultiPrice;
 import src.main.PromotionOneFree;
 import src.main.TotalPrice;
 
 import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CheckOutTest{
@@ -22,7 +26,9 @@ public class CheckOutTest{
     static Item itemE;
     static PromotionMultiPrice promotionMultiPrice;
     static PromotionOneFree promotionOneFree;
+    static PromotionMealDeal promotionMealDeal;
     static PromotionItems promotionItems;
+    static Map<String, Item> map;
 
     
     public static void init(){
@@ -32,32 +38,27 @@ public class CheckOutTest{
         itemD = new Item("D", 150, 1);
         itemE = new Item("E", 200, 1);
 
+        map = new HashMap<>();
+
+        map.put("A", itemA);
+        map.put("B", itemB);
+        map.put("C", itemC);
+        map.put("D", itemD);
+        map.put("E", itemE);
+
         promotionMultiPrice = new PromotionMultiPrice();
         promotionOneFree = new PromotionOneFree();
-        promotionItems = new PromotionItems(promotionMultiPrice, promotionOneFree);
+        promotionMealDeal = new PromotionMealDeal();
+        promotionItems = new PromotionItems(promotionMultiPrice, promotionOneFree, promotionMealDeal);
 
     }
 
     public static Integer scan(String items){
         CheckOut checkOut = new CheckOut();
         for(int i = 0; i < items.length(); i++) {
-            switch (items.substring(i, i+1)){
-                case "A":
-                checkOut.scanItems(itemA);
-                break;
-                case "B":
-                checkOut.scanItems(itemB);
-                break;
-                case "C":
-                checkOut.scanItems(itemC);
-                break;
-                case "D":
-                checkOut.scanItems(itemD);
-                break;
-                case "E":
-                checkOut.scanItems(itemE);
+            if(map.containsKey(items.substring(i, i+1))){
+                checkOut.scanItems(map.get(items.substring(i, i+1)));
             }
-
         }
 
         return price(checkOut);
@@ -67,7 +68,6 @@ public class CheckOutTest{
         ItemsList itemsList = checkOut.getItemsList();
         TotalPrice totalPrice = new TotalPrice(itemsList, promotionItems);
         int result = totalPrice.calculatePrice();
-        System.out.println(result);
         return result;
     }
 
@@ -92,14 +92,22 @@ public class CheckOutTest{
         assertEquals(Integer.valueOf(100), scan("CCCCCC"));
         assertEquals(Integer.valueOf(150), scan("D"));
         assertEquals(Integer.valueOf(300), scan("DD"));
-        // assertEquals(Integer.valueOf(300), scan("DE"));
-        // assertEquals(Integer.valueOf(450), scan("DDE"));
-        // assertEquals(Integer.valueOf(200), scan("E"));
-        // assertEquals(Integer.valueOf(400), scan("EE"));
-        // assertEquals(Integer.valueOf(300), scan("ED"));
-        // assertEquals(Integer.valueOf(500), scan("EDE"));
-        // assertEquals(Integer.valueOf(600), scan("EDDE"));
-        // assertEquals(Integer.valueOf(750), scan("EEDDD"));
+        assertEquals(Integer.valueOf(300), scan("DE"));
+        assertEquals(Integer.valueOf(450), scan("DDE"));
+        assertEquals(Integer.valueOf(200), scan("E"));
+        assertEquals(Integer.valueOf(400), scan("EE"));
+        assertEquals(Integer.valueOf(300), scan("ED"));
+        assertEquals(Integer.valueOf(500), scan("EDE"));
+        assertEquals(Integer.valueOf(600), scan("EDDE"));
+        assertEquals(Integer.valueOf(750), scan("EEDDD"));
+        assertEquals(Integer.valueOf(450), scan("ABCDE"));
+        assertEquals(Integer.valueOf(500), scan("ABBCDE"));
+        assertEquals(Integer.valueOf(675), scan("ABBCCCEDD"));
+        assertEquals(Integer.valueOf(550), scan("BCDEBBC"));
+        assertEquals(Integer.valueOf(1250), scan("BCCCCDEDEEDDA"));
+        assertEquals(Integer.valueOf(300), scan("AAEF"));
+        assertEquals(Integer.valueOf(0), scan(""));
+
     }
 
     public static void main(String[] args) throws Exception{

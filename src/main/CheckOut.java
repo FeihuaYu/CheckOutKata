@@ -12,7 +12,7 @@ public class CheckOut {
         if(item==null){
             return null;
         }
-        System.out.println("Scan item is " + item.getID());
+
         itemsList.add(item);
         return itemsList;
     }
