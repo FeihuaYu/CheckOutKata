@@ -35,14 +35,13 @@ public class CheckOutTest{
 
     
     public static void init(){
-        itemA = new Item("A", 50, 1);
-        itemB = new Item("B", 75, 1);
-        itemC = new Item("C", 25, 1);
-        itemD = new Item("D", 150, 1);
-        itemE = new Item("E", 200, 1);
+        itemA = new Item("A", 50);
+        itemB = new Item("B", 75);
+        itemC = new Item("C", 25);
+        itemD = new Item("D", 150);
+        itemE = new Item("E", 200);
 
         map = new HashMap<>();
-
         map.put("A", itemA);
         map.put("B", itemB);
         map.put("C", itemC);
@@ -53,8 +52,8 @@ public class CheckOutTest{
         mealDealList.add(itemD);
         mealDealList.add(itemE);
 
-        promotionMultiPrice = new PromotionMultiPrice();
-        promotionOneFree = new PromotionOneFree();
+        promotionMultiPrice = new PromotionMultiPrice(itemB);
+        promotionOneFree = new PromotionOneFree(itemC);
         promotionMealDeal = new PromotionMealDeal(mealDealList);
         promotionItems = new PromotionItems(promotionMultiPrice, promotionOneFree, promotionMealDeal);
 

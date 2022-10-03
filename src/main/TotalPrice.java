@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.namespace.QName;
+
 
 public class TotalPrice {
     ShoppingCart itemsList;
@@ -29,36 +29,36 @@ public class TotalPrice {
         for(Map.Entry<Item, Integer> entry: itemsMap.entrySet()){
             int itemQuantity = entry.getValue();
             int itemPrice = entry.getKey().getPrice();
-            String itemID = entry.getKey().getID();
-            totalPrices += itemQuantity * itemPrice;
 
-            System.out.println("init totalPromotionValue is " + totalPromotionValue);
-            if(promotionItems.getPromotionOneFree().isOneFree(itemID)){
-                promotionValue = promotionItems.getPromotionOneFree().calculatePromotion(itemQuantity, itemPrice);
-                totalPromotionValue += promotionValue;
-            }
-            System.out.println("first totalPromotionValue is " + totalPromotionValue);
-            if(promotionItems.getPromotionMultiPrice().isMultiPrice(itemID)){
-                promotionValue = promotionItems.getPromotionMultiPrice().calculatePromotion(itemQuantity, itemPrice);
-                totalPromotionValue += promotionValue;
-            }
-            System.out.println("second totalPromotionValue is " + totalPromotionValue);
-            
-            System.out.println("itemQuantity is " + itemQuantity);
-            System.out.println("itemPrice is " + itemPrice);
-            System.out.println("totalPromotionValue is " + totalPromotionValue);
+            totalPrices += itemQuantity * itemPrice;
         }
 
-        List<Item> targetItem = promotionItems.getPromotionMealDeal().getMealDealList();
+        Item targetMultiPriceItem = promotionItems.getPromotionMultiPrice().getMultiPriceItem();
+        if(itemsMap.containsKey(targetMultiPriceItem)){
+            promotionValue = promotionItems.getPromotionMultiPrice().calculatePromotion(itemsMap.get(targetMultiPriceItem));
+            totalPromotionValue += promotionValue;
+        }
+
+
+
+        Item targetOneFreeItem = promotionItems.getPromotionOneFree().getOneFreeItem();
+        if(itemsMap.containsKey(targetOneFreeItem)){
+            promotionValue = promotionItems.getPromotionOneFree().calculatePromotion(itemsMap.get(targetOneFreeItem));
+            totalPromotionValue += promotionValue;
+        }
+
+
+
+        List<Item> targetMealDealItem = promotionItems.getPromotionMealDeal().getMealDealList();
         List<Integer> quantityList = new LinkedList<>();
-        for(Item item : targetItem){
+        for(Item item : targetMealDealItem){
             if(itemsMap.containsKey(item)){
                 int quantity = itemsMap.get(item);
                 quantityList.add(quantity);
             }
         }
         
-        if(!quantityList.isEmpty() && quantityList.size()==targetItem.size()){
+        if(!quantityList.isEmpty() && quantityList.size()==targetMealDealItem.size()){
             promotionValue = promotionItems.getPromotionMealDeal().calculatePromotion(quantityList);
             totalPromotionValue += promotionValue;
         }

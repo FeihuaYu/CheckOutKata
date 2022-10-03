@@ -1,10 +1,10 @@
 package src.main;
 
 public class CheckOut {
-    private ShoppingCart itemsList;
+    private ShoppingCart cart;
 
     public CheckOut(){
-        itemsList = new ShoppingCart();
+        cart = new ShoppingCart();
         
     }
 
@@ -14,11 +14,11 @@ public class CheckOut {
             return null;
         }
 
-        itemsList.add(item);
-        return itemsList;
+        cart.add(item);
+        return cart;
     }
 
     public ShoppingCart getItemsList(){
-        return itemsList;
+        return cart;
     }
 }

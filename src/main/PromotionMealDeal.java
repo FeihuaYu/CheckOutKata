@@ -1,6 +1,5 @@
 package src.main;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class PromotionMealDeal implements PromotionRules{
@@ -14,15 +13,22 @@ public class PromotionMealDeal implements PromotionRules{
 
     @Override
     // Buy D and E for £3
-    public int calculatePromotion(List<Integer> itemQuantity) {
+    public int calculatePromotion(List<Integer> itemQuantityList) {
         int promotionValue = 0;
-        
-        int itemPrice1 = mealDealList.get(0).getPrice();
-        int itemPrice2 = mealDealList.get(1).getPrice();
-        int itemQuantity1 = itemQuantity.get(0);
-        int itemQuantity2 = itemQuantity.get(1);
+        int totalItemPrice = 0;
 
-        promotionValue = (itemPrice1 + itemPrice2 - mealDealPrice) * Math.min(itemQuantity1, itemQuantity2);
+        int minItemQuantity = Integer.MAX_VALUE;
+
+        for(Item item : mealDealList){
+            int itemPrice = item.getPrice();
+            totalItemPrice += itemPrice;
+        }
+
+        for(int itemQuantity : itemQuantityList){
+            minItemQuantity = Math.min(minItemQuantity, itemQuantity);
+        }
+
+        promotionValue = (totalItemPrice - mealDealPrice) * minItemQuantity;
 
         return promotionValue;
     }
@@ -32,14 +38,16 @@ public class PromotionMealDeal implements PromotionRules{
         return mealDealPrice;
     }
 
-    @Override
-    public int calculatePromotion(int itemQuantity, int itemPrice) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+
 
     public List<Item> getMealDealList() {
         return mealDealList;
+    }
+
+    @Override
+    public int calculatePromotion(int itemQuantity) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
     
