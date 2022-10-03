@@ -30,13 +30,20 @@ public class TotalPrice {
             totalPrices += itemQuantity * itemPrice;
         }
 
-        totalPromotionValue = calculatePromotionValue(promotionItems.getPromotionOneFree()) + calculatePromotionValue(promotionItems.getPromotionMultiPrice())
-                            + calculatePromotionMealDeal(promotionItems.getPromotionMealDeal());
+        List<PromotionRules> singleTargetStratgies = promotionItems.getSingleTargetStratgies();
+        for(PromotionRules strategy: singleTargetStratgies){
+            totalPromotionValue += calculateSingleTargetPromotionValue(strategy);
+        }
+        
+        List<PromotionRules> targetsStratgies = promotionItems.getTargetsStratgies();
+        for(PromotionRules strategy: targetsStratgies){
+            totalPromotionValue += calculateTargetsPromotionValue(strategy);
+        }
         return totalPrices - totalPromotionValue;
     }
 
 
-    public int calculatePromotionValue(PromotionRules promotionRules){
+    public int calculateSingleTargetPromotionValue(PromotionRules promotionRules){
         int promotionValue = 0;
         Item targetOneFreeItem = promotionRules.getPromotionItem();
         if(itemsMap.containsKey(targetOneFreeItem)){
@@ -46,7 +53,7 @@ public class TotalPrice {
     }
 
 
-    public int calculatePromotionMealDeal(PromotionRules promotionRules){
+    public int calculateTargetsPromotionValue(PromotionRules promotionRules){
         int promotionValue = 0;
         List<Item> targetMealDealItem = promotionRules.getPromotionItemList();
         List<Integer> quantityList = new LinkedList<>();
@@ -57,7 +64,7 @@ public class TotalPrice {
             }
         }
         if(!quantityList.isEmpty() && quantityList.size()==targetMealDealItem.size()){
-            promotionValue = promotionItems.getPromotionMealDeal().calculatePromotion(quantityList);
+            promotionValue = promotionRules.calculatePromotion(quantityList);
         }
         return promotionValue;
     }

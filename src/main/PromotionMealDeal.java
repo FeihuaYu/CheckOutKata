@@ -13,6 +13,7 @@ public class PromotionMealDeal extends PromotionRules{
     
 
     // Buy D and E for £3
+    @Override
     public int calculatePromotion(List<Integer> itemQuantityList) {
         int promotionValue = 0;
         int totalItemPrice = 0;
@@ -44,7 +45,7 @@ public class PromotionMealDeal extends PromotionRules{
         return mealDealList;
     }
 
-    // @Override
+    @Override
     public int calculatePromotion(int itemQuantity) {
         // TODO Auto-generated method stub
         return 0;

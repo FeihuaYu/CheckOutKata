@@ -1,27 +1,25 @@
 package src.main;
-
+import java.util.List;
+import java.util.LinkedList;
 public class PromotionItems {
-    private PromotionMultiPrice promotionMultiPrice;
-    private PromotionOneFree promotionOneFree;
-    private PromotionMealDeal promotionMealDeal;
+    private List<PromotionRules> promotionSingleTargetRules = new LinkedList<>();
+    private List<PromotionRules> promotionTargetsRules = new LinkedList<>();
 
-    public PromotionItems(PromotionMultiPrice promotionMultiPrice, PromotionOneFree promotionOneFree, PromotionMealDeal promotionMealDeal) {
-        this.promotionMultiPrice = promotionMultiPrice;
-        this.promotionOneFree = promotionOneFree;
-        this.promotionMealDeal = promotionMealDeal;
+    public List<PromotionRules> getSingleTargetStratgies() {
+        return promotionSingleTargetRules;
     }
 
-    public PromotionMultiPrice getPromotionMultiPrice() {
-        return promotionMultiPrice;
+    public List<PromotionRules> getTargetsStratgies() {
+        return promotionTargetsRules;
     }
 
-    public PromotionOneFree getPromotionOneFree() {
-        return promotionOneFree;
+    public void setpromotionSingleTargetRules(PromotionRules promotionalSingleTargetRule) {
+        this.promotionSingleTargetRules.add(promotionalSingleTargetRule);
     }
 
-    public PromotionMealDeal getPromotionMealDeal() {
-        return promotionMealDeal;
-    }
 
+    public void setpromotionTargetsRules(PromotionRules promotionTargetsRules) {
+        this.promotionTargetsRules.add(promotionTargetsRules);
+    }
     
 }

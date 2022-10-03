@@ -20,7 +20,6 @@ import java.util.Map;
 
 
 public class CheckOutTest{
-
     static Item itemA;
     static Item itemB;
     static Item itemC;
@@ -35,6 +34,7 @@ public class CheckOutTest{
 
     
     public static void init(){
+        // Inital Items
         itemA = new Item("A", 50);
         itemB = new Item("B", 75);
         itemC = new Item("C", 25);
@@ -51,11 +51,17 @@ public class CheckOutTest{
         mealDealList = new LinkedList<>();
         mealDealList.add(itemD);
         mealDealList.add(itemE);
-
-        promotionMultiPrice = new PromotionMultiPrice(itemB);
-        promotionOneFree = new PromotionOneFree(itemC);
+        
+        // Strategy Inital
+        promotionMultiPrice = new PromotionMultiPrice(itemB, 2, 25);
+        promotionOneFree = new PromotionOneFree(itemC, 3);
         promotionMealDeal = new PromotionMealDeal(mealDealList);
-        promotionItems = new PromotionItems(promotionMultiPrice, promotionOneFree, promotionMealDeal);
+        promotionItems = new PromotionItems();
+
+        // Set Stratgies
+        promotionItems.setpromotionSingleTargetRules(promotionMultiPrice);
+        promotionItems.setpromotionSingleTargetRules(promotionOneFree);
+        promotionItems.setpromotionTargetsRules(promotionMealDeal);
 
     }
 

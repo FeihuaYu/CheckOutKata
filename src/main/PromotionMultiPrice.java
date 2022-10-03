@@ -3,20 +3,13 @@ package src.main;
 import java.util.List;
 
 public class PromotionMultiPrice extends PromotionRules{
+    private final int promotionQuantity;
+    private int promotionPrice;
 
-    public PromotionMultiPrice(Item promotionItem) {
+    public PromotionMultiPrice(Item promotionItem, int quantity, int discount) {
         super(promotionItem);
-        multiPriceItem = promotionItem;
-    }
-
-
-    private final int promotionPrice = 125;
-    private final int promotionQuantity = 2;
-    private Item multiPriceItem;
-   
-
-    public Item getMultiPriceItem() {
-        return multiPriceItem;
+        promotionQuantity = quantity;
+        promotionPrice = promotionItem.getPrice() * quantity - discount;
     }
 
     @Override
@@ -32,8 +25,8 @@ public class PromotionMultiPrice extends PromotionRules{
         if(itemQuantity / promotionQuantity >= 1){
             int quotient = itemQuantity / promotionQuantity;  
             int reminder = itemQuantity % promotionQuantity;
-            promotionValue = (itemQuantity * multiPriceItem.getPrice()) - 
-                                    (quotient * promotionPrice + reminder * multiPriceItem.getPrice());
+            promotionValue = (itemQuantity * super.getPromotionItem().getPrice()) - 
+                                    (quotient * promotionPrice + reminder * super.getPromotionItem().getPrice());
         }
         return promotionValue;
 
