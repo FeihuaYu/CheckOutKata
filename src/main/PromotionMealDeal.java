@@ -1,45 +1,45 @@
 package src.main;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class PromotionMealDeal implements PromotionRules{
-    private final String dealItemID1 = "D";
-    private final String dealItemID2 = "E";
     private final int mealDealPrice = 300;
+    private List<Item> mealDealList; 
+
+    
+    public PromotionMealDeal(List<Item> mealDealList) {
+        this.mealDealList = mealDealList;
+    }
 
     @Override
     // Buy D and E for £3
-    public int calculatePromotion(Item item1, Item item2) {
+    public int calculatePromotion(List<Integer> itemQuantity) {
         int promotionValue = 0;
-        if(item1.getID().equals(dealItemID1)){
-            int quantity1 = item1.getQuantity();
-            int quantity2 = item2.getQuantity();
-            if(quantity1 == quantity2){
-                promotionValue = (item1.getPrice() + item2.getPrice() - mealDealPrice) * quantity1;
-            }else if(quantity1 > quantity2){
-                promotionValue = (item1.getPrice() + item2.getPrice() - mealDealPrice) * quantity2;
-            }else{
-                promotionValue = (item1.getPrice() + item2.getPrice() - mealDealPrice) * quantity1;
-            }
-        }
+        
+        int itemPrice1 = mealDealList.get(0).getPrice();
+        int itemPrice2 = mealDealList.get(1).getPrice();
+        int itemQuantity1 = itemQuantity.get(0);
+        int itemQuantity2 = itemQuantity.get(1);
+
+        promotionValue = (itemPrice1 + itemPrice2 - mealDealPrice) * Math.min(itemQuantity1, itemQuantity2);
 
         return promotionValue;
     }
 
-    public String getDealItemID2() {
-        return dealItemID2;
+
+    public int getMealDealPrice() {
+        return mealDealPrice;
     }
 
     @Override
-    public int calculatePromotion(Item item) {
+    public int calculatePromotion(int itemQuantity, int itemPrice) {
         // TODO Auto-generated method stub
         return 0;
     }
 
-    public String getDealItemID1() {
-        return dealItemID1;
-    }
-
-    public int getMealDealPrice() {
-        return mealDealPrice;
+    public List<Item> getMealDealList() {
+        return mealDealList;
     }
 
     

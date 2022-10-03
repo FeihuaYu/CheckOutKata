@@ -1,14 +1,15 @@
 package src.main;
 
 public class CheckOut {
-    private ItemsList itemsList;
+    private ShoppingCart itemsList;
 
     public CheckOut(){
-        itemsList = new ItemsList();
+        itemsList = new ShoppingCart();
+        
     }
 
 
-    public ItemsList scanItems(Item item){
+    public ShoppingCart scanItems(Item item){
         if(item==null){
             return null;
         }
@@ -17,7 +18,7 @@ public class CheckOut {
         return itemsList;
     }
 
-    public ItemsList getItemsList(){
+    public ShoppingCart getItemsList(){
         return itemsList;
     }
 }

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import src.main.CheckOut;
 import src.main.Item;
-import src.main.ItemsList;
+import src.main.ShoppingCart;
 import src.main.PromotionItems;
 import src.main.PromotionMealDeal;
 import src.main.PromotionMultiPrice;
@@ -14,6 +14,8 @@ import src.main.TotalPrice;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -29,6 +31,7 @@ public class CheckOutTest{
     static PromotionMealDeal promotionMealDeal;
     static PromotionItems promotionItems;
     static Map<String, Item> map;
+    static List<Item> mealDealList;
 
     
     public static void init(){
@@ -46,9 +49,13 @@ public class CheckOutTest{
         map.put("D", itemD);
         map.put("E", itemE);
 
+        mealDealList = new LinkedList<>();
+        mealDealList.add(itemD);
+        mealDealList.add(itemE);
+
         promotionMultiPrice = new PromotionMultiPrice();
         promotionOneFree = new PromotionOneFree();
-        promotionMealDeal = new PromotionMealDeal();
+        promotionMealDeal = new PromotionMealDeal(mealDealList);
         promotionItems = new PromotionItems(promotionMultiPrice, promotionOneFree, promotionMealDeal);
 
     }
@@ -65,7 +72,7 @@ public class CheckOutTest{
     }
 
     public static Integer price(CheckOut checkOut){
-        ItemsList itemsList = checkOut.getItemsList();
+        ShoppingCart itemsList = checkOut.getItemsList();
         TotalPrice totalPrice = new TotalPrice(itemsList, promotionItems);
         int result = totalPrice.calculatePrice();
         return result;
